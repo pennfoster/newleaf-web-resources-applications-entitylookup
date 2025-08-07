@@ -1,0 +1,7 @@
+{
+  "spec": [ "./src/**/*.test.ts" ],
+  "ignore": [ "./node_modules/**/*.*" ],
+  "recursive": true,
+  "require": "./register.js",
+  "extension": [ "ts" ]
+}

@@ -1,0 +1,41 @@
+# Test all of the JavaScript functionality with the repository
+
+trigger:
+    - 
+
+pool:
+    vmImage: windows-latest
+
+steps:
+    - task: NodeTool@0
+      inputs:
+          versionSpec: "22.x"
+      displayName: "Install Node.js"
+
+    - task: Npm@1
+      inputs:
+          command: "install"
+          workingDir: "."
+          verbose: true
+      displayName: "Install npm packages"
+
+    - task: Npm@1
+      inputs:
+          command: "custom"
+          workingDir: "."
+          customCommand: "run build"
+      displayName: "Run format, lint, test, and build"
+
+    - task: PublishTestResults@2
+      condition: succeededOrFailed()
+      inputs:
+          testRunner: JUnit
+          testResultsFiles: "**/test-results.xml"
+      displayName: "Publish test results to Azure DevOps"
+
+    - task: PublishCodeCoverageResults@1
+      inputs:
+          codeCoverageTool: "Cobertura"
+          summaryFileLocation: "$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml"
+          pathToSources: "$(System.DefaultWorkingDirectory)/src"
+      displayName: "Publish code coverage results to Azure DevOps"

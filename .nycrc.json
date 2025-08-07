@@ -1,0 +1,36 @@
+{
+  "extends": "@istanbuljs/nyc-config-typescript",
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules/",
+    "register.js",
+    "src/**/*.test.ts"
+  ],
+  "extension": [
+    ".ts"
+  ],
+  "reporter": [
+    "lcovonly",
+    "cobertura"
+  ],
+  "watermarks": {
+    "lines": [
+      80,
+      90
+    ],
+    "functions": [
+      80,
+      90
+    ],
+    "branches": [
+      80,
+      90
+    ],
+    "statements": [
+      80,
+      90
+    ]
+  }
+}

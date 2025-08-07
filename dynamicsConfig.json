@@ -1,0 +1,20 @@
+{
+    "NamingConvention": {
+        "WebResourceFolder": [
+            "/WebResources"
+        ],
+        "Prefix": [
+            ""
+        ]
+    },
+    "OrgInfo": {
+        "CrmUrl": "https://cne-dev-300930.crm.dynamics.com",
+        "ApiVersion": "9.1"
+    },
+    "UploadOptions": {
+        "AddExistingToSolution": false
+    },
+    "Solutions": [
+        "PennfosterConfig"
+    ]
+}

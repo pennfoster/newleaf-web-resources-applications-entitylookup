@@ -1,10 +1,20 @@
 import { expect } from "chai";
 import { mock, instance, when, anyString, verify, resetCalls, anyFunction, anything } from "ts-mockito";
-import { Filter, GrandParentLookup, SingleParentLookup } from "@pennfoster/newleaf-web-resources-domain";
-import { EntityLookup } from "./pf_EntityLookup";
+import { GrandParentLookup } from "@pennfoster/newleaf-web-resources-domain/LookupFilter/GrandParentLookup";
+import { Filter } from "@pennfoster/newleaf-web-resources-domain/LookupFilter/Filter";
+import { SingleParentLookup } from "@pennfoster/newleaf-web-resources-domain/LookupFilter/SingleParentLookup";
+import { resolveModulePath } from "../resolveModulePath.ts";
+let EntityLookup: typeof import("./pf_EntityLookup.ts")["EntityLookup"];
 import { IXrmWebApi } from "@pennfoster/newleaf-web-resources-core";
 
 describe("Entity Lookup", () => {
+
+    before(async () => {
+        // Dynamically import the SUT using a proper file:// URL
+        ({ EntityLookup } = await import(resolveModulePath("src/pf_EntityLookup.ts")));
+    });
+
+
     const guid = "b5a54c3e-6372-4e75-b835-69e64217a24a";
     const bracketedGuid = `{${guid}}`;
     const destinationColumnName = "pf_productofferingfundsource";
@@ -58,7 +68,6 @@ describe("Entity Lookup", () => {
         resetCalls(MockFilter);
         resetCalls(MockXrmWebApi);
     });
-
     it("should successfully execute SingleParentLookupLoad ", () => {
         const columnName = "pf_processstage";
         const parentColumnName = "pf_process";
@@ -66,7 +75,7 @@ describe("Entity Lookup", () => {
         const operator = "eq";
         const uitype = "workflow";
         const entityLookup = new EntityLookup(instance(MockXrmWebApi), instance(MockSingleParentLookup), instance(MockGrandParentLookup));
-
+        
         entityLookup.SingleParentLookupLoad(instance(MockEventContext), columnName, parentColumnName, attribute, operator, uitype);
         verify(MockSingleParentLookup.AddFilterToLookup(anything(), anyString(), anyString(), anything())).once();
     });

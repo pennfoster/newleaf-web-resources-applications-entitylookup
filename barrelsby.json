@@ -1,9 +1,0 @@
-{
-  "directory": ".",
-  "include": ["src"],
-  "delete": true,
-  "barrelName": "index",
-  "structure": "flat",
-  "exclude": ["dist", "./src/**/*.test.ts", "./**/*.config.ts"],
-  "export": ["named"]
-}

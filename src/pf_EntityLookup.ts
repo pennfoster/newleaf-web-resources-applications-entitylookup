@@ -1,11 +1,12 @@
-import { IXrmWebApi, XrmWebApi } from "@pennfoster/newleaf-web-resources-core";
-import { retrieveRecordByIdAndExpand } from "@pennfoster/newleaf-web-resources-services-dynamics";
+import { IXrmWebApi } from "@pennfoster/newleaf-web-resources-core/IXrmWebApi";
+import { XrmWebApi } from "@pennfoster/newleaf-web-resources-core/XrmWebApi";
+import { retrieveRecordByIdAndExpand } from "@pennfoster/newleaf-web-resources-services-dynamics/LookupService";
 import { GrandParentLookup } from "@pennfoster/newleaf-web-resources-domain/LookupFilter/GrandParentLookup";
 import { IGrandParentLookup } from "@pennfoster/newleaf-web-resources-domain/LookupFilter/IGrandParentLookup";
 import { Filter } from "@pennfoster/newleaf-web-resources-domain/LookupFilter/Filter";
 import { ISingleParentLookup } from "@pennfoster/newleaf-web-resources-domain/LookupFilter/ISingleParentLookup";
 import { SingleParentLookup } from "@pennfoster/newleaf-web-resources-domain/LookupFilter/SingleParentLookup";
-import {getSourceLookupId} from "@pennfoster/newleaf-web-resources-domain/LookupFilter/GetSourceLookupId";
+import { getSourceLookupId } from "@pennfoster/newleaf-web-resources-domain/LookupFilter/GetSourceLookupId";
 
 class EntityLookup {
     grandParents = {};

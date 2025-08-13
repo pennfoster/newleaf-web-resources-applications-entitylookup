@@ -35,10 +35,10 @@ class EntityLookup {
 
     public async GrandParentLookupLoad(
         executionContext: Xrm.Events.EventContext,
-        destinationColumnName: string,
-        parentColumnName: string,
-        grandParentColumn: string,
-        grandParentEntity: string,
+        destinationColumnLogicalName: string,
+        parentEntityLogicalName: string,
+        grandParentEntityLogicalName: string,
+        grandParentColumnLogicalName: string,
         attribute: string,
         operator: string,
         uiType: string,
@@ -46,31 +46,36 @@ class EntityLookup {
         const formContext = executionContext.getFormContext();
         const filter = new Filter(attribute, operator, "", uiType);
 
-        const key = `${destinationColumnName}-${parentColumnName}-${grandParentColumn}-${grandParentEntity}`;
+        const key = `${destinationColumnLogicalName}-${parentEntityLogicalName}-${grandParentColumnLogicalName}-${grandParentEntityLogicalName}`;
 
         const lookup = this.grandParents[key];
         let grandParentColumnValue: string = "";
 
         if (!lookup) {
             //get grand parent column value for filter
-            const columnLookupId = getSourceLookupId(formContext, parentColumnName);
+            const columnLookupId = getSourceLookupId(formContext, parentEntityLogicalName);
             grandParentColumnValue =
-                (await retrieveRecordByIdAndExpand(this.webApi, columnLookupId, grandParentColumn, grandParentEntity, grandParentColumn)) ??
-                "";
+                (await retrieveRecordByIdAndExpand(
+                    this.webApi,
+                    parentEntityLogicalName,
+                    columnLookupId,
+                    grandParentEntityLogicalName,
+                    grandParentColumnLogicalName,
+                )) ?? "";
 
             this.grandParents[key] = this.iGrandParentLookup;
             await this.iGrandParentLookup.AddFilterToLookup(
                 formContext,
-                destinationColumnName,
-                parentColumnName,
+                destinationColumnLogicalName,
+                parentEntityLogicalName,
                 grandParentColumnValue,
                 filter,
             );
         } else {
             await (lookup as GrandParentLookup).SetFilterValue(
                 formContext,
-                parentColumnName,
-                destinationColumnName,
+                parentEntityLogicalName,
+                destinationColumnLogicalName,
                 grandParentColumnValue,
                 filter,
             );

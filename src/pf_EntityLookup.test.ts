@@ -37,61 +37,67 @@ describe("EntityLookup", () => {
 
     it("should call AddFilterToLookup in GrandParentLookupLoad when not cached", async () => {
         // Setup for getSourceLookupId and retrieveRecordByIdAndExpand
-        const parentColumnName = "parentCol";
-        const destinationColumnName = "destCol";
-        const grandParentColumn = "grandCol";
-        const grandParentEntity = "grandEntity";
+        const parentEntityLogicalName = "parentCol";
+        const destinationColumnLogicalName = "destCol";
+        const grandParentColumnLogicalName = "grandCol";
+        const grandParentEntityLogicalName = "grandEntity";
         const attribute = "attr";
         const operator = "eq";
         const uiType = "type";
 
         // Mock getSourceLookupId and retrieveRecordByIdAndExpand globally if needed
 
-        when(mockGrandParent.AddFilterToLookup(anything(), destinationColumnName, parentColumnName, anything(), anything())).thenResolve(
-            {},
-        );
+        when(
+            mockGrandParent.AddFilterToLookup(anything(), destinationColumnLogicalName, parentEntityLogicalName, anything(), anything()),
+        ).thenResolve({});
         entityLookup.grandParents = {}; // Ensure cache is empty
 
         await entityLookup.GrandParentLookupLoad(
             instance(mockEventContext),
-            destinationColumnName,
-            parentColumnName,
-            grandParentColumn,
-            grandParentEntity,
+            destinationColumnLogicalName,
+            parentEntityLogicalName,
+            grandParentEntityLogicalName,
+            grandParentColumnLogicalName,
             attribute,
             operator,
             uiType,
         );
 
-        verify(mockGrandParent.AddFilterToLookup(anything(), destinationColumnName, parentColumnName, anything(), anything())).once();
+        verify(
+            mockGrandParent.AddFilterToLookup(anything(), destinationColumnLogicalName, parentEntityLogicalName, anything(), anything()),
+        ).once();
     });
 
     it("should call SetFilterValue in GrandParentLookupLoad when cached", async () => {
-        const parentColumnName = "parentCol";
-        const destinationColumnName = "destCol";
-        const grandParentColumn = "grandCol";
-        const grandParentEntity = "grandEntity";
+        const parentEntityLogicalName = "parentCol";
+        const destinationColumnLogicalName = "destCol";
+        const grandParentColumnLogicalName = "grandCol";
+        const grandParentEntityLogicalName = "grandEntity";
         const attribute = "attr";
         const operator = "eq";
         const uiType = "type";
 
         // Simulate cache
-        const key = `${destinationColumnName}-${parentColumnName}-${grandParentColumn}-${grandParentEntity}`;
+        const key = `${destinationColumnLogicalName}-${parentEntityLogicalName}-${grandParentColumnLogicalName}-${grandParentEntityLogicalName}`;
         entityLookup.grandParents[key] = instance(mockGrandParent);
 
-        when(mockGrandParent.SetFilterValue(anything(), parentColumnName, destinationColumnName, anything(), anything())).thenResolve({});
+        when(
+            mockGrandParent.SetFilterValue(anything(), parentEntityLogicalName, destinationColumnLogicalName, anything(), anything()),
+        ).thenResolve({});
 
         await entityLookup.GrandParentLookupLoad(
             instance(mockEventContext),
-            destinationColumnName,
-            parentColumnName,
-            grandParentColumn,
-            grandParentEntity,
+            destinationColumnLogicalName,
+            parentEntityLogicalName,
+            grandParentEntityLogicalName,
+            grandParentColumnLogicalName,
             attribute,
             operator,
             uiType,
         );
 
-        verify(mockGrandParent.SetFilterValue(anything(), parentColumnName, destinationColumnName, anything(), anything())).once();
+        verify(
+            mockGrandParent.SetFilterValue(anything(), parentEntityLogicalName, destinationColumnLogicalName, anything(), anything()),
+        ).once();
     });
 });

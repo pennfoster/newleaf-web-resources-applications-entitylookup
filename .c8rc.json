@@ -1,10 +1,11 @@
 {
-    "include": [
-      "src/**/*.ts"
-    ],
-    "exclude": [
-      "src/**/*.test.ts",
-      "node_modules/**"
-    ],
-    "all": true
- }
+  "reporter": ["text", "lcov", "cobertura"],
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/*.test.ts",
+    "node_modules/**"
+  ],
+  "all": true
+}

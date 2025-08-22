@@ -7,7 +7,6 @@ import { Filter } from "@pennfoster/newleaf-web-resources-domain/LookupFilter/Fi
 import { ISingleParentLookup } from "@pennfoster/newleaf-web-resources-domain/LookupFilter/ISingleParentLookup";
 import { SingleParentLookup } from "@pennfoster/newleaf-web-resources-domain/LookupFilter/SingleParentLookup";
 import { getSourceLookupId } from "@pennfoster/newleaf-web-resources-domain/LookupFilter/GetSourceLookupId";
-import { formatGuid } from "@pennfoster/newleaf-web-resources-domain/FormatProvider";
 
 class EntityLookup {
     grandParents = {};
@@ -29,8 +28,6 @@ class EntityLookup {
         operator: string,
         uiType: string,
     ): void {
-        const formattedGuid = formatGuid("{12345678-1234-1234-1234-123456789012}");
-
         const formContext = executionContext.getFormContext();
         const filter = new Filter(attribute, operator, "", uiType);
         this.iSingleParentLookup.AddFilterToLookup(formContext, columnName, parentColumnName, filter);
@@ -46,8 +43,6 @@ class EntityLookup {
         operator: string,
         uiType: string,
     ): Promise<any> {
-        const formattedGuid = formatGuid("{12345678-1234-1234-1234-123456789012}");
-
         const formContext = executionContext.getFormContext();
         const filter = new Filter(attribute, operator, "", uiType);
 
